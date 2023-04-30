@@ -7,6 +7,6 @@
 
 ### Topologia de Rede
 
-![image](https://user-images.githubusercontent.com/72319195/235350674-5ac287bc-5c0c-44cc-af51-8b124f9472d8.png)
+![image](https://user-images.githubusercontent.com/72319195/235382006-7a5bade6-7615-4db1-859e-e6ae5f024119.png)
 
 
