@@ -38,6 +38,15 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect = "Allow"
         Resource = "${aws_sqs_queue.queue.arn}"
       },
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface"
+        ]
+        Resource = "*"
+      }
     ]
   })
 }
@@ -75,7 +84,11 @@ resource "aws_lambda_function" "lambda_function" {
     handler       = "index.handler"
     source_code_hash = data.archive_file.lambda_zip.output_base64sha256
     runtime       = "python3.8"
-    
+
+    vpc_config {
+        subnet_ids         = [module.vpc.public_subnets[0]]
+        security_group_ids = [aws_security_group.lambda_sg.id] 
+    }
 }  
 #cloudwatch log group
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
