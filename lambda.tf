@@ -54,18 +54,11 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = "${aws_dynamodb_table.dynamodb_table.arn}"
       },
       ##permissions of amazon RDS
-      {
-        Effect = "Allow"
-        Action = [
-          "rds-db:connect"
-        ]
-        Resource = [
-          "${aws_db_instance.database_lambda.arn}",
-          "${aws_db_instance.database_lambda.endpoint}"
-        ]
-
-
-      }
+     {
+      Effect = "Allow"
+      Action= ["rds:*"]
+      Resource = "${aws_db_instance.database_lambda.arn}"
+    }
     ]
   })
 }

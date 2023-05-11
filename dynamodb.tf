@@ -9,8 +9,7 @@ resource "aws_dynamodb_table" "dynamodb_table" {
     name = "TestTableHashKey"
     type = "S"
   }
-
-  
+  depends_on = [ aws_vpc_endpoint.dynamodb_endpoint]
 }
 
 resource "aws_vpc_endpoint" "dynamodb_endpoint" {

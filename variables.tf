@@ -18,6 +18,10 @@ variable "password" {
 variable "username" {
   default = "admin"
 }
+variable "account_id" {
+  default = "108791993403"
+}
+  
 
 # variable "vpc_cidr" {
 #   default = "10.0.0.0/16"
