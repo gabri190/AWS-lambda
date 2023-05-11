@@ -11,6 +11,13 @@ variable "app_env" {
   default = "project-terraform"
   description = "value for the environment tag"
 }
+variable "password" {
+  default = "admin-gabriel"
+  description = "password for the database RDS"
+}
+variable "username" {
+  default = "admin"
+}
 
 # variable "vpc_cidr" {
 #   default = "10.0.0.0/16"

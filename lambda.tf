@@ -46,6 +46,25 @@ resource "aws_iam_policy" "lambda_policy" {
           "ec2:DeleteNetworkInterface"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        #dynamodb actions
+        Action = ["dynamodb:*"]
+        Resource = "${aws_dynamodb_table.dynamodb_table.arn}"
+      },
+      ##permissions of amazon RDS
+      {
+        Effect = "Allow"
+        Action = [
+          "rds-db:connect"
+        ]
+        Resource = [
+          "${aws_db_instance.database_lambda.arn}",
+          "${aws_db_instance.database_lambda.endpoint}"
+        ]
+
+
       }
     ]
   })
@@ -89,6 +108,19 @@ resource "aws_lambda_function" "lambda_function" {
         subnet_ids         = [module.vpc.public_subnets[0]]
         security_group_ids = [aws_security_group.lambda_sg.id] 
     }
+    depends_on = [ aws_vpc_endpoint.dynamodb_endpoint]
+
+    environment {
+      variables = {
+      DB_HOST = aws_db_instance.database_lambda.address
+      DB_USER = aws_db_instance.database_lambda.username
+      DB_PASS = aws_db_instance.database_lambda.password
+      DB_NAME = aws_db_instance.database_lambda.db_name
+    }
+  }
+
+    #environment variables
+
 }  
 #cloudwatch log group
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
