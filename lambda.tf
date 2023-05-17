@@ -15,28 +15,26 @@ resource "aws_iam_policy" "lambda_policy" {
         Action = [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
-          "logs:PutLogEvents",
+          "logs:PutLogEvents"
         ]
         Effect = "Allow"
         Resource = "*"
       },
       {
-        Action = [
+        "Effect": "Allow",
+        "Action": [
           "s3:GetObject",
-          "s3:PutObject",
-        ]
-        Effect = "Allow"
-        Resource = "${aws_s3_bucket.bucket.arn}"
-      },
+          "s3:PutObject"
+        ],
+        "Resource": "${aws_s3_bucket.bucket.arn}"
+     },
       {
-        Action = [
+        "Effect": "Allow",
+        "Action": [
           "sqs:SendMessage",
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes",
-        ]
-        Effect = "Allow"
-        Resource = "${aws_sqs_queue.queue.arn}"
+          "sqs:ReceiveMessage"
+        ],
+        "Resource": "${aws_sqs_queue.queue.arn}"
       },
       {
         Effect = "Allow"
@@ -48,17 +46,26 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = "*"
       },
       {
-        Effect = "Allow"
-        #dynamodb actions
-        Action = ["dynamodb:*"]
-        Resource = "${aws_dynamodb_table.dynamodb_table.arn}"
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:DescribeStream",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator",
+          "dynamodb:ListStreams",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem"
+        ],
+        "Resource": "${aws_dynamodb_table.dynamodb_table.arn}"
       },
       ##permissions of amazon RDS
-     {
-      Effect = "Allow"
-      Action= ["rds:*"]
-      Resource = "${aws_db_instance.database_lambda.arn}"
-    }
+      { 
+        "Effect": "Allow",
+        "Action": [
+          "rds:DescribeDBInstances",
+          "rds:DescribeDBClusters"
+        ],
+        "Resource": "*"
+      }
     ]
   })
 }
@@ -93,7 +100,7 @@ resource "aws_lambda_function" "lambda_function" {
     filename      = "${path.module}/lambda.zip"
     function_name = "${var.app_env}-lambda-function"
     role          = aws_iam_role.lambda_role.arn
-    handler       = "index.handler"
+    handler       = "index.lambda_handler"
     source_code_hash = data.archive_file.lambda_zip.output_base64sha256
     runtime       = "python3.8"
 
@@ -105,18 +112,21 @@ resource "aws_lambda_function" "lambda_function" {
 
     environment {
       variables = {
-      DB_HOST = aws_db_instance.database_lambda.address
-      DB_USER = aws_db_instance.database_lambda.username
-      DB_PASS = aws_db_instance.database_lambda.password
-      DB_NAME = aws_db_instance.database_lambda.db_name
-    }
+        S3_BUCKET = aws_s3_bucket.bucket.id
+        SQS_QUEUE = aws_sqs_queue.queue.id
+        DB_HOST = aws_db_instance.database_lambda.address
+        DB_USER = aws_db_instance.database_lambda.username
+        DB_PASS = aws_db_instance.database_lambda.password
+        DB_NAME = aws_db_instance.database_lambda.db_name
+      }
+    
   }
 
     #environment variables
 
 }  
-#cloudwatch log group
-resource "aws_cloudwatch_log_group" "lambda_log_group" {
-    name = "/aws/lambda/${aws_lambda_function.lambda_function.function_name}"
-    retention_in_days = 1
-}
+# #cloudwatch log group
+# resource "aws_cloudwatch_log_group" "lambda_log_group" {
+#     name = "/aws/lambda/${var.cloudwatch_log_group_name}"
+#     retention_in_days = 5
+# }

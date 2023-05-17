@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "my-vpc"
+  name = "${var.vpc_name}"
   cidr = "10.0.0.0/16"
 
   azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
@@ -18,22 +18,30 @@ module "vpc" {
   }
 }
 
+
+resource "aws_subnet" "lambda_subnet" {
+  vpc_id     = module.vpc.vpc_id
+  cidr_block = "${var.vpc_cidr_block_subnet}"
+  tags = {
+    Name = "Public Subnet - gabriel araujo"
+  } 
+}
+
 resource "aws_security_group" "lambda_sg" {
     name        = "${var.app_env}-lambda-sg"
     description = "Allow inbound traffic"
     vpc_id      = module.vpc.vpc_id
     
     ingress {
-        description = "Allow inbound traffic"
-        from_port   = 0
-        to_port     = 65535
-        protocol    = "tcp"
+        from_port   = var.from_port
+        to_port     = var.to_port
+        protocol    = "${var.protocol}"
         cidr_blocks = ["0.0.0.0/0"]
     }
     egress {
-    from_port = 0
-    to_port   = 65535
-    protocol  = "tcp"
+    from_port = var.from_port
+    to_port   = var.to_port
+    protocol  = "${var.protocol}"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

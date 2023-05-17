@@ -22,11 +22,22 @@ variable "account_id" {
   default = "108791993403"
 }
   
-
-# variable "vpc_cidr" {
-#   default = "10.0.0.0/16"
+variable "vpc_name" {
+  default = "vpc_lambda_rds"
+}
   
-# }
+variable "vpc_cidr_block" {
+  default = "10.0.0.0/16"
+}
+
+variable "vpc_cidr_block_subnet" {
+  default = "10.0.0.0/24"
+}
+
+variable "cloudwatch_log_group_name" {
+  default = "lambda-rds-sqs-s3-tf"
+}
+  
 # variable "public_subnet_cidr" {
 #   default = "10.0.1.0/24"
 # }
@@ -44,12 +55,12 @@ variable "account_id" {
 #   default = ["0.0.0.0/0"]
 # }
 
-# variable "from_port" {
-#   default = 0
-# }
-# variable "to_port" {
-#   default = 65535
-# }
-# variable "protocol" {
-#   default = "tcp"
-# }
+variable "from_port" {
+  default = 0
+}
+variable "to_port" {
+  default = 65535
+}
+variable "protocol" {
+  default = "tcp"
+}
