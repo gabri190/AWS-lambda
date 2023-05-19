@@ -2,6 +2,8 @@ resource "aws_db_instance" "database_lambda" {
   allocated_storage    = 10
 
   db_name              = "database_lambda"
+  identifier           = "mysql-db-lambda"
+  
   engine               = "mysql"
   engine_version       = "8.0.28"
   instance_class       = "db.t2.micro"

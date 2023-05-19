@@ -32,10 +32,16 @@ resource "aws_iam_policy" "lambda_policy" {
         "Effect": "Allow",
         "Action": [
           "sqs:SendMessage",
-          "sqs:ReceiveMessage"
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes",
+          "lambda:InvokeFunction"
         ],
         "Resource": "${aws_sqs_queue.queue.arn}"
       },
+      
+
+
       {
         Effect = "Allow"
         Action = [
@@ -103,30 +109,27 @@ resource "aws_lambda_function" "lambda_function" {
     handler       = "index.lambda_handler"
     source_code_hash = data.archive_file.lambda_zip.output_base64sha256
     runtime       = "python3.8"
+    #tempo limite de execução da função lambda
+    timeout       = 20
 
-    vpc_config {
-        subnet_ids         = [module.vpc.public_subnets[0]]
-        security_group_ids = [aws_security_group.lambda_sg.id] 
-    }
-    depends_on = [ aws_vpc_endpoint.dynamodb_endpoint]
-
-    environment {
-      variables = {
-        S3_BUCKET = aws_s3_bucket.bucket.id
-        SQS_QUEUE = aws_sqs_queue.queue.id
-        DB_HOST = aws_db_instance.database_lambda.address
-        DB_USER = aws_db_instance.database_lambda.username
-        DB_PASS = aws_db_instance.database_lambda.password
-        DB_NAME = aws_db_instance.database_lambda.db_name
-      }
-    
+     vpc_config {
+      subnet_ids         = [module.vpc.private_subnets[0]]
+      security_group_ids = [aws_security_group.lambda_sg.id]
   }
+    depends_on = [aws_vpc_endpoint.dynamodb_endpoint]
+
+    # environment {
+    #   variables = {
+    #     S3_BUCKET = aws_s3_bucket.bucket.id
+    #     SQS_QUEUE = aws_sqs_queue.queue.id
+    #     DB_HOST = aws_db_instance.database_lambda.endpoint
+    #     DB_USER = aws_db_instance.database_lambda.username
+    #     DB_PASS = aws_db_instance.database_lambda.password
+    #     DB_NAME = aws_db_instance.database_lambda.db_name
+    #   }
+    
+  #}
 
     #environment variables
 
-}  
-# #cloudwatch log group
-# resource "aws_cloudwatch_log_group" "lambda_log_group" {
-#     name = "/aws/lambda/${var.cloudwatch_log_group_name}"
-#     retention_in_days = 5
-# }
+}
