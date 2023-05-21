@@ -281,7 +281,7 @@ Na imagem anterior percebemos a criação de 2 items ( 1 item havia sido criado 
   
 <li> Podemos também ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c5d5693b-5861-4820-a1a8-25acbf0a0026)
+<center>![image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)<center>
 
 Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
