@@ -1,10 +1,9 @@
 ## Projeto AWS Lambda 
-  <li>Este projeto é um exemplo de um sistema de gerenciamento da função lambda que utiliza a AWS Lambda como serviço principal e o S3, SQS, Amazon Rds e DynamoDb como serviços auxiliares.Assim, de forma prática um evento como um upload de um arquivo seria processado inicialmente, o SQS que é um sistema de filas(Queue) iria mandar uma mensagem para a função lambda por meio de um event source mapping sobre o arquivo baixado no s3 e ,posteriormente, usa os dados dos eventos para atualizar tabelas do DynamoDB . Além disso, ele armazena uma cópia do evento em um banco de dados MySQL.
+  <li>Este projeto é um exemplo de um sistema de gerenciamento da função lambda que utiliza a AWS Lambda como serviço principal e o S3, SQS, Amazon Rds e DynamoDb como serviços auxiliares.Assim, de forma prática pode-se fazer um sistema de gerenciamento de bancos de dados ou tabelas onde o SQS que é um sistema de filas(Queue) iria mandar uma mensagem em forma de json para cadastrar algum usuário para a função lambda por meio de um event source mapping e ,posteriormente, usa os dados dos eventos (cadastro do usuário) para atualizar tabelas do DynamoDB . Além disso, ele armazena uma cópia do evento em um banco de dados MySQL (Amazon Rds).Neste projeto, foi feita a estrutura para o s3 mas o s3 não foi utilizado. Neste caso, o s3 é um possível trigger (gatilho) para a função lambda.
 
 ### Topologia de Rede
   
-  ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/8429f45f-6ca5-4bbe-953c-cca95d45809e)
-
+  ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/eabea0ed-d34b-4e46-b903-faa5bb933036)
 ### Tecnologias
   <div> 
     <a href="terraform logo" target="_blank"><img src="https://img.shields.io/badge/-TERRAFORM-blueviolet" target="_blank"></a>
@@ -14,9 +13,9 @@
 ### Serviços Utilizados
 A aplicação de exemplo usa os seguintes serviços da AWS:
 
-<li> S3: recebe eventos de clientes e os armazena temporariamente para processamento por meio de um bucket (upload de um evento).
+<li> S3: Feito no projeto mas não utilizado colocado como opção de um possível trigger para a função lambda!
 
-<li> SQS: O Amazon SQS atua como um intermediário entre o S3 e a função Lambda, permitindo que a função seja acionada de forma assíncrona pelo evento de criação de objeto no bucket S3, após ser adicionado à fila SQS correspondente.
+<li> SQS: O Amazon SQS envia mensagens(cadastro de usuários) para a função lambda que irá processá-las e envia-las para o banco de dados e a tabela do dynamoDB.
   
 <li> AWS Lambda: lê a mensagem do SQS e envia eventos para o código do handler da função.
 
@@ -72,6 +71,11 @@ Com a imagem a seguir:
   <li> Na página "Revisar", revise as configurações da conta do usuário e clique no botão "Criar usuário".
 
   <li> Na página "Usuários", selecione o usuário recém-criado e clique na guia "Credenciais de segurança".
+    
+  <li> Agora na mesma guia você pode criar as "chaves de acesso":
+      
+  ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/082308d3-61b3-4b79-9342-21a2ff4f8d6c)
+
 
   <li> Anote ou baixe as chaves de acesso (Access Key ID e Secret Access Key) para uso posterior com o Terraform.
 
@@ -149,27 +153,14 @@ A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo planej
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/5ac44d48-aad8-46a7-9da7-a2535155ed66)
 
-A seguir será utilizado o comando plan. Esse comando é usado para criar um plano de execução que mostra o que o Terraform fará quando você executar o comando apply. O plano mostra quais recursos serão criados, atualizados ou excluídos e quaisquer mudanças no estado que ocorrerão como resultado dessas ações. O plano é uma visualização útil do que o Terraform fará e permite que você verifique se está satisfeito com as mudanças antes de executar o comando apply.
+ Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):.
 ~~~
-terraform apply
+terraform apply -auto-approve
 ~~~
 
 A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo aplicada:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c5645125-846f-485f-9ed1-20e4e7a5e5cd)
-
-
-
-<!-- Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):
-~~~
-terraform apply
-~~
-
-A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo aplicada:
-
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c5645125-846f-485f-9ed1-20e4e7a5e5cd)
- -->
-
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/ce562ef1-b87f-4417-987b-00ad10d7b550)
 
 ### Teste Infraestrutura AWS
 
@@ -203,7 +194,7 @@ Procure por project-terraform-lambda-function e clique para ir à pagina a segui
 #### Criação RDS
 Ao chegar a página após procurar por "RDS" no campo de pesquisa na parte esquerda procure por bancos de dados e clique para ir à pagina, posteriormente você será redirecionado a página dos bancos e clique no único banco e irá para a próxima página:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/5782616e-903d-4179-9521-5118e188b085)
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/53f4f91f-0503-414c-b028-7433b07039e6)
 
 #### Criação DynamoDB
 Ao chegar a página após procurar por "DyanamoDB" no campo de pesquisa na parte esquerda procure por tabelas e clique para ir à pagina, posteriormente você será redirecionado a página de tabelas e clique na única tabela e irá para a próxima página:
@@ -212,6 +203,235 @@ Ao chegar a página após procurar por "DyanamoDB" no campo de pesquisa na parte
 
 
 #### Teste dos Recursos
+
+Agora podemos testar os recursos criados na AWS, como visto anteriormente:
+
+<li> Com tudo criado volte para a função lambda criada, e na parte principal vá em testar:
+ 
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/28506f13-a504-43e8-893a-2473b20af3dc)
+
+<li> Substitua o JSON do evento pelo código a seguir:
+ 
+test.json  
+ ~~~
+ {
+    "Records": [
+      {
+        "messageId": "059f36b4-87a3-44ab-83d2-661975830a7d",
+        "receiptHandle": "AQEBwJnKyrHigUMZj6rYigCgxlaS3SLy0a...",
+        "body": "{\n     \"CustID\": 1021,\n     \"Name\": \"Martha Rivera\"\n}",
+        "attributes": {
+          "ApproximateReceiveCount": "1",
+          "SentTimestamp": "1545082649183",
+          "SenderId": "AIDAIENQZJOLO23YVJ4VO",
+          "ApproximateFirstReceiveTimestamp": "1545082649185"
+        },
+        "messageAttributes": {},
+        "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
+        "eventSource": "aws:sqs",
+        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-s3-event-notification-queue",
+        "awsRegion": "us-east-1"
+      }
+    ]
+  } 
+ ~~~
+ 
+<li> Salve o evento e agora estaremos prontos pra testar!
+  
+<li> Volte para a parte de código e após clicar em teste, a imagem a seguir deverá aparecer avisando que 1 item foi adicionado ao RDS:
+ 
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a054f7c-7d55-4a28-8289-886934a17d36)
+
+<li> Agora volte ao recurso criado do SQS (queue) ,clique na queue criada e posteriormente, clique em enviar e recever mensagens e já nessa página envie a mensagem a seguir:
+ 
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/62bd7e54-2eee-4e8a-8ff7-7aaa1de4ace4)
+
+<li> Agora volte para a função Lambda e altere o Json de evento para evitar chaves duplicadas
+  
+~~~
+{
+    "Records": [
+      {
+        "messageId": "059f36b4-87a3-44ab-83d2-661975830a7d",
+        "receiptHandle": "AQEBwJnKyrHigUMZj6rYigCgxlaS3SLy0a...",
+        "body": "{\n     \"CustID\": 1023,\n     \"Name\": \"Gabriel Alves\"\n}",
+        "attributes": {
+          "ApproximateReceiveCount": "1",
+          "SentTimestamp": "1545082649183",
+          "SenderId": "AIDAIENQZJOLO23YVJ4VO",
+          "ApproximateFirstReceiveTimestamp": "1545082649185"
+        },
+        "messageAttributes": {},
+        "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
+        "eventSource": "aws:sqs",
+        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-s3-event-notification-queue",
+        "awsRegion": "us-east-1"
+      }
+    ]
+  }
+~~~
+  
+Após isso teremos a imagem (eu já havia criado outro evento antes):  
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/7ea88fa8-c8eb-4a03-8e6e-8f9a26ead5e0)
+  
+Na imagem anterior percebemos a criação de 2 items ( 1 item havia sido criado antes) além  do item que foi criado anteriormente de maneira que um deles foi criado no JSON de evento e outro por meio do envio da mensagem da SQS para a função lambda:
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/ed858955-e1d6-4c24-8478-51403d01ba01)
+  
+<li> Podemos também ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c5d5693b-5861-4820-a1a8-25acbf0a0026)
+
+Clique em   **/aws/lambda/project-terraform-lambda-function** :
+  
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/549d9236-4f4d-4ac7-976b-44998c587734)
+
+<li> Na parte de Streams de Log clique no mais recente:
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c0c91d7b-59a4-487a-a82b-3cb8d8c03310)
+
+<li> Você verá a criação dos cadastros que foram mostrados anteriormente:
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/3e639ca2-80c6-49ea-b5ef-57a79d29104e)
+
+<li> Agora modifique o código python na seção de códigos da função lambda para o último teste agora em relação ao DynamoDB!  
+  
+~~~  
+def lambda_handler(event, context):
+    print('Incoming event: ', event)
+    print('Incoming state: ', event['state'])
+
+#Check if this is the end of the window to either aggregate or process.
+    if event['isFinalInvokeForWindow']:
+        # logic to handle final state of the window
+        print('Destination invoke')
+    else:
+        print('Aggregate invoke')
+
+#Check for early terminations
+    if event['isWindowTerminatedEarly']:
+        print('Window terminated early')
+
+    #Aggregation logic
+    state = event['state']
+    for record in event['Records']:
+        state[str(record['dynamodb']['Keys']['Id']['N'])] = state.get(str(record['dynamodb']['Keys']['Id']['N']), 0) + 1
+
+
+    print('Returning state: ', state)
+    return {'state': state}
+ ~~~
+  
+<li> Modifique também o JSON de evento:
+
+ ~~~
+ {
+  "Records": [
+    {
+      "eventID": "1",
+      "eventName": "INSERT",
+      "eventVersion": "1.0",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-east-1",
+      "dynamodb": {
+        "Keys": {
+          "Id": {
+            "N": "101"
+          }
+        },
+        "NewImage": {
+          "Message": {
+            "S": "New item!"
+          },
+          "Id": {
+            "N": "101"
+          }
+        },
+        "SequenceNumber": "111",
+        "SizeBytes": 26,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "stream-ARN"
+    },
+    {
+      "eventID": "2",
+      "eventName": "MODIFY",
+      "eventVersion": "1.0",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-east-1",
+      "dynamodb": {
+        "Keys": {
+          "Id": {
+            "N": "101"
+          }
+        },
+        "NewImage": {
+          "Message": {
+            "S": "This item has changed"
+          },
+          "Id": {
+            "N": "101"
+          }
+        },
+        "OldImage": {
+          "Message": {
+            "S": "New item!"
+          },
+          "Id": {
+            "N": "101"
+          }
+        },
+        "SequenceNumber": "222",
+        "SizeBytes": 59,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "stream-ARN"
+    },
+    {
+      "eventID": "3",
+      "eventName": "REMOVE",
+      "eventVersion": "1.0",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-east-1",
+      "dynamodb": {
+        "Keys": {
+          "Id": {
+            "N": "101"
+          }
+        },
+        "OldImage": {
+          "Message": {
+            "S": "This item has changed"
+          },
+          "Id": {
+            "N": "101"
+          }
+        },
+        "SequenceNumber": "333",
+        "SizeBytes": 38,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "stream-ARN"
+    }
+  ],
+  "window": {
+    "start": "2020-07-30T17:00:00Z",
+    "end": "2020-07-30T17:05:00Z"
+  },
+  "state": {
+    "1": "state1"
+  },
+  "shardId": "shard123456789",
+  "eventSourceARN": "stream-ARN",
+  "isFinalInvokeForWindow": false,
+  "isWindowTerminatedEarly": false
+} 
+~~~
+  
+Você verá a seguinte saída:
+ 
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a0a7d7c-6a9e-4f92-80ab-288bf20dc67e)
 
 
 ### Término e destruição da Infraestrutura
