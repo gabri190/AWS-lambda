@@ -67,10 +67,10 @@ resource "aws_iam_policy" "lambda_policy" {
       { 
         "Effect": "Allow",
         "Action": [
-          "rds:DescribeDBInstances",
-          "rds:DescribeDBClusters"
+          "rds:*"
+
         ],
-        "Resource": "*"
+        "Resource": "${aws_db_instance.database_lambda.arn}"
       }
     ]
   })
