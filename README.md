@@ -1,5 +1,5 @@
 ## Projeto AWS Lambda 
-  <li>Este projeto é um exemplo de um sistema de gerenciamento da função lambda que utiliza a AWS Lambda como serviço principal e o S3, SQS, Amazon Rds e DynamoDb como serviços auxiliares.Assim, de forma prática pode-se fazer um sistema de gerenciamento de bancos de dados ou tabelas onde o SQS que é um sistema de filas(Queue) iria mandar uma mensagem em forma de json para cadastrar algum usuário para a função lambda por meio de um event source mapping e ,posteriormente, usa os dados dos eventos (cadastro do usuário) para atualizar tabelas do DynamoDB . Além disso, ele armazena uma cópia do evento em um banco de dados MySQL (Amazon Rds).Neste projeto, foi feita a estrutura para o s3 mas o s3 não foi utilizado. Neste caso, o s3 é um possível trigger (gatilho) para a função lambda.
+  <li>Este projeto é um exemplo de um sistema de gerenciamento da função lambda que utiliza a AWS Lambda como serviço principal e SQS, Amazon Rds, DynamoDb e CloudWatch como serviços auxiliares.Assim, de forma prática pode-se fazer um sistema de gerenciamento de bancos de dados ou tabelas onde o SQS que é um sistema de filas(Queue) iria mandar uma mensagem em forma de json para cadastrar algum usuário para a função lambda por meio de um event source mapping e ,posteriormente, usa os dados dos eventos (cadastro do usuário) para atualizar tabelas do DynamoDB . Além disso, ele armazena uma cópia do evento em um banco de dados MySQL (Amazon Rds).
 
 ### Topologia de Rede
   
@@ -13,8 +13,6 @@
 ### Serviços Utilizados
 A aplicação de exemplo usa os seguintes serviços da AWS:
 
-<li> S3: Feito no projeto mas não utilizado colocado como opção de um possível trigger para a função lambda!
-
 <li> SQS: O Amazon SQS envia mensagens(cadastro de usuários) para a função lambda que irá processá-las e envia-las para o banco de dados e a tabela do dynamoDB.
   
 <li> AWS Lambda: lê a mensagem do SQS e envia eventos para o código do handler da função.
@@ -22,10 +20,10 @@ A aplicação de exemplo usa os seguintes serviços da AWS:
 <li> DynamoDB: armazena listas geradas pela aplicação.
 
 <li> Amazon RDS: armazena uma cópia dos registros processados em um banco de dados relacional.
+ 
+<li> CloudWatch: Por meio dos streams de Log é possível saber se os cadastros foram criados.
 
-<li> Secrets Manager: armazena a senha do banco de dados.
-
-<li> Amazon VPC: fornece uma rede local privada para comunicação entre a função e o banco de dados.
+<li> Amazon VPC: fornece uma rede local privada para comunicação entre a função lambda e o banco de dados que necessitam estar na mesma subnet.
 
 ### Requisitos
  <li> <a href="https://aws.amazon.com/pt/">AWS account</a>
@@ -175,16 +173,12 @@ Primeiramente, é necessário saber se os recursos de fato foram criados na AWS:
   
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/102490b6-a3cf-4f6f-bce9-17095705aaf5)
 
-Procure em sequência com os nomes "S3", "SQS" , "Lambda", "RDS" e DynamoDB"
-#### Criação S3
-Procure por project-terraform-s3-sqs-demo-bucket e clique para ir à pagina a seguir:
-
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/95f04a33-db02-4785-86ab-e12ed272df16)
+Procure em sequência com os nomes "SQS" , "Lambda", "RDS" e DynamoDB"
 
 #### Criação SQS
-Procure por project-terraform-s3-event-notification-queue e clique para ir à pagina a seguir:
+Procure por project-terraform-event-notification-queue e clique para ir à pagina a seguir:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2f9a9c36-77a5-445b-b2bb-a936b292b81e)
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/193739f0-05b0-4a17-af95-d2782234fd33)
 
 #### Criação lambda Function
 Procure por project-terraform-lambda-function e clique para ir à pagina a seguir:
@@ -242,7 +236,7 @@ test.json
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a054f7c-7d55-4a28-8289-886934a17d36)
 
-<li> Agora volte ao recurso criado do SQS (queue) ,clique na queue criada e posteriormente, clique em enviar e recever mensagens e já nessa página envie a mensagem a seguir:
+<li> Agora volte ao recurso criado do SQS (queue) ,clique na queue criada e posteriormente, clique em enviar e receber mensagens e já nessa página envie a mensagem a seguir:
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/62bd7e54-2eee-4e8a-8ff7-7aaa1de4ace4)
 
