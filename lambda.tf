@@ -20,14 +20,7 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect = "Allow"
         Resource = "*"
       },
-    #   {
-    #     "Effect": "Allow",
-    #     "Action": [
-    #       "s3:GetObject",
-    #       "s3:PutObject"
-    #     ],
-    #     "Resource": "${aws_s3_bucket.bucket.arn}"
-    #  },
+    
       {
         "Effect": "Allow",
         "Action": [
@@ -41,7 +34,10 @@ resource "aws_iam_policy" "lambda_policy" {
       },
       {
       "Effect": "Allow",
-      "Action": "ec2:CreateNetworkInterface",
+      "Action": ["ec2:CreateNetworkInterface",
+             "ec2:DescribeNetworkInterfaces",
+             "ec2:DeleteNetworkInterface"
+            ],
       "Resource": "*"
       },
       {
@@ -94,6 +90,8 @@ resource "aws_iam_role_policy_attachment" "terraform_lambda_policy" {
     policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
+
+
 #lambda function
 resource "aws_lambda_function" "lambda_function" {
     filename      = "${path.module}/lambda.zip"
@@ -109,11 +107,13 @@ resource "aws_lambda_function" "lambda_function" {
       subnet_ids         = [module.vpc.private_subnets[0]]
       security_group_ids = [aws_security_group.lambda_sg.id]
   }
-    depends_on = [aws_vpc_endpoint.dynamodb_endpoint]
+
+  depends_on = [aws_vpc_endpoint.dynamodb_endpoint]
 
    
 }
 # #event source from SQS
+# Mapeamento da fonte de evento do SQS para a função Lambda
 resource "aws_lambda_event_source_mapping" "sqs_event_source" {
   event_source_arn = aws_sqs_queue.queue.arn
   function_name    = aws_lambda_function.lambda_function.arn
