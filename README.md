@@ -240,6 +240,17 @@ test.json
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/62bd7e54-2eee-4e8a-8ff7-7aaa1de4ace4)
 
+<li> A mensagem correspondente em um json:
+
+sqs_test.json
+~~~
+{
+  "CustID": 1054,
+  "Name": "Richard Roe"
+}
+~~~
+  
+
 <li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
 [image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
@@ -422,10 +433,4 @@ terraform destroy
 Após destruir a infraestruturua, você verá a saída a seguir:
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/aa157664-58ad-48e0-9632-5b4245694afd)
-
- 
-
-    
-
-    
-    
+   
