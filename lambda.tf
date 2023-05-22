@@ -34,9 +34,10 @@ resource "aws_iam_policy" "lambda_policy" {
       },
       {
       "Effect": "Allow",
-      "Action": ["ec2:CreateNetworkInterface",
-             "ec2:DescribeNetworkInterfaces",
-             "ec2:DeleteNetworkInterface"
+      "Action": [
+            "ec2:CreateNetworkInterface",
+            "ec2:DescribeNetworkInterfaces",
+            "ec2:DeleteNetworkInterface"
             ],
       "Resource": "*"
       },
@@ -101,10 +102,10 @@ resource "aws_lambda_function" "lambda_function" {
     source_code_hash = data.archive_file.lambda_zip.output_base64sha256
     runtime       = "python3.8"
     #tempo limite de execução da função lambda
-    timeout       = 20
+    timeout       = 10
 
      vpc_config {
-      subnet_ids         = [module.vpc.private_subnets[0]]
+      subnet_ids         = [aws_subnet.private_subnet[0].id]
       security_group_ids = [aws_security_group.lambda_sg.id]
   }
 

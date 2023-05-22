@@ -12,7 +12,7 @@ resource "aws_db_instance" "database_lambda" {
   parameter_group_name = "default.mysql8.0"
   
   skip_final_snapshot  = true
-  publicly_accessible = true
+  publicly_accessible = false
   copy_tags_to_snapshot = true
   max_allocated_storage = 1000
   vpc_security_group_ids = [aws_security_group.lambda_sg.id]
@@ -21,7 +21,7 @@ resource "aws_db_instance" "database_lambda" {
 #create a private subnet group for the database
 resource "aws_db_subnet_group" "db_subnet_group" {
   name       = "subnet_group_rds "
-  subnet_ids = module.vpc.private_subnets
+  subnet_ids = [aws_subnet.private_subnet[0].id, aws_subnet.private_subnet[1].id, aws_subnet.private_subnet[2].id]
 }
 
 
