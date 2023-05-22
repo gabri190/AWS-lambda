@@ -1,6 +1,6 @@
 # Purpose: Create SQS queue for S3 event notification
 resource "aws_sqs_queue" "queue" {
-    name="${var.app_env}-s3-event-notification-queue"
+    name="${var.app_env}-event-notification-queue"
     policy = <<POLICY
     {
         "Version": "2012-10-17",
@@ -10,10 +10,10 @@ resource "aws_sqs_queue" "queue" {
                 "Effect": "Allow",
                 "Principal": "*",
                 "Action": "SQS:SendMessage",
-                "Resource": "arn:aws:sqs:*:*:${var.app_env}-s3-event-notification-queue",
+                "Resource": "*",
                 "Condition": {
                     "ArnEquals": {
-                        "aws:SourceArn": "${aws_s3_bucket.bucket.arn}"
+                        "aws:SourceArn": "*"
                     }
                 }
             }
@@ -23,3 +23,5 @@ resource "aws_sqs_queue" "queue" {
 
 POLICY
 }
+
+

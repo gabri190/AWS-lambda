@@ -20,14 +20,14 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect = "Allow"
         Resource = "*"
       },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "s3:GetObject",
-          "s3:PutObject"
-        ],
-        "Resource": "${aws_s3_bucket.bucket.arn}"
-     },
+    #   {
+    #     "Effect": "Allow",
+    #     "Action": [
+    #       "s3:GetObject",
+    #       "s3:PutObject"
+    #     ],
+    #     "Resource": "${aws_s3_bucket.bucket.arn}"
+    #  },
       {
         "Effect": "Allow",
         "Action": [
@@ -39,9 +39,6 @@ resource "aws_iam_policy" "lambda_policy" {
         ],
         "Resource": "${aws_sqs_queue.queue.arn}"
       },
-      
-
-
       {
         Effect = "Allow"
         Action = [
@@ -118,18 +115,11 @@ resource "aws_lambda_function" "lambda_function" {
   }
     depends_on = [aws_vpc_endpoint.dynamodb_endpoint]
 
-    # environment {
-    #   variables = {
-    #     S3_BUCKET = aws_s3_bucket.bucket.id
-    #     SQS_QUEUE = aws_sqs_queue.queue.id
-    #     DB_HOST = aws_db_instance.database_lambda.endpoint
-    #     DB_USER = aws_db_instance.database_lambda.username
-    #     DB_PASS = aws_db_instance.database_lambda.password
-    #     DB_NAME = aws_db_instance.database_lambda.db_name
-    #   }
-    
-  #}
-
-    #environment variables
-
+   
+}
+# #event source from SQS
+resource "aws_lambda_event_source_mapping" "sqs_event_source" {
+  event_source_arn = aws_sqs_queue.queue.arn
+  function_name    = aws_lambda_function.lambda_function.arn
+  batch_size       = 1
 }
