@@ -234,61 +234,32 @@ test.json
   
 <li> Volte para a parte de código e após clicar em teste, a imagem a seguir deverá aparecer avisando que 1 item foi adicionado ao RDS:
  
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a054f7c-7d55-4a28-8289-886934a17d36)
-
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/17ef8b8f-bee4-4e5e-b7d1-732d54e3cc04)
+  
 <li> Agora volte ao recurso criado do SQS (queue) ,clique na queue criada e posteriormente, clique em enviar e receber mensagens e já nessa página envie a mensagem a seguir:
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/62bd7e54-2eee-4e8a-8ff7-7aaa1de4ace4)
 
-<li> Agora volte para a função Lambda e altere o Json de evento para evitar chaves duplicadas
-  
-~~~
-{
-    "Records": [
-      {
-        "messageId": "059f36b4-87a3-44ab-83d2-661975830a7d",
-        "receiptHandle": "AQEBwJnKyrHigUMZj6rYigCgxlaS3SLy0a...",
-        "body": "{\n     \"CustID\": 1023,\n     \"Name\": \"Gabriel Alves\"\n}",
-        "attributes": {
-          "ApproximateReceiveCount": "1",
-          "SentTimestamp": "1545082649183",
-          "SenderId": "AIDAIENQZJOLO23YVJ4VO",
-          "ApproximateFirstReceiveTimestamp": "1545082649185"
-        },
-        "messageAttributes": {},
-        "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
-        "eventSource": "aws:sqs",
-        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-s3-event-notification-queue",
-        "awsRegion": "us-east-1"
-      }
-    ]
-  }
-~~~
-  
-Após isso teremos a imagem (eu já havia criado outro evento antes):  
+<li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/7ea88fa8-c8eb-4a03-8e6e-8f9a26ead5e0)
-  
-Na imagem anterior percebemos a criação de 2 items ( 1 item havia sido criado antes) além  do item que foi criado anteriormente de maneira que um deles foi criado no JSON de evento e outro por meio do envio da mensagem da SQS para a função lambda:
-
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/ed858955-e1d6-4c24-8478-51403d01ba01)
-  
-<li> Podemos também ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
-
-<center>![image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)<center>
+[image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
 
 Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/549d9236-4f4d-4ac7-976b-44998c587734)
+  
+Clique no último log criado ( o primeiro de cima pra baixo):
 
-<li> Na parte de Streams de Log clique no mais recente:
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/0aa71985-92ce-4c66-a848-5b238d82e182)
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c0c91d7b-59a4-487a-a82b-3cb8d8c03310)
+Após isso teremos a imagem :  
 
-<li> Você verá a criação dos cadastros que foram mostrados anteriormente:
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/e576eec3-1d77-404b-a2a5-54a1ee3fdec4)
+  
+Na imagem anterior percebemos entre todas as mensagens a criação de 2 items de maneira que um deles foi criado no JSON de evento simulado e outro por meio do envio da mensagem da SQS para a função lambda:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/3e639ca2-80c6-49ea-b5ef-57a79d29104e)
-
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/a0e2976a-4611-46fd-89b1-bb838a313978)
+  
 <li> Agora modifique o código python na seção de códigos da função lambda para o último teste agora em relação ao DynamoDB!  
   
 ~~~  
