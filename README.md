@@ -149,9 +149,9 @@ terraform plan
 
 A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo planejada:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/5ac44d48-aad8-46a7-9da7-a2535155ed66)
-
- Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):.
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/bd4538ee-68ba-41b5-95dc-bdb378d04bb7)
+    
+Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):.
 ~~~
 terraform apply -auto-approve
 ~~~
