@@ -90,7 +90,13 @@ resource "aws_iam_role_policy_attachment" "terraform_lambda_policy" {
     role       = aws_iam_role.lambda_role.name
     policy_arn = aws_iam_policy.lambda_policy.arn
 }
-
+# #event source from SQS
+# Mapeamento da fonte de evento do SQS para a função Lambda
+resource "aws_lambda_event_source_mapping" "sqs_event_source" {
+  event_source_arn = aws_sqs_queue.queue.arn
+  function_name    = aws_lambda_function.lambda_function.arn
+  batch_size       = 1
+}
 
 
 #lambda function
@@ -104,19 +110,12 @@ resource "aws_lambda_function" "lambda_function" {
     #tempo limite de execução da função lambda
     timeout       = 10
 
-     vpc_config {
+    vpc_config {
       subnet_ids         = [aws_subnet.private_subnet[0].id]
       security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
-  depends_on = [aws_vpc_endpoint.dynamodb_endpoint]
+  depends_on = [aws_vpc_endpoint.dynamodb_endpoint,
+  aws_iam_role_policy_attachment.terraform_lambda_policy,aws_iam_role.lambda_role]
 
-   
-}
-# #event source from SQS
-# Mapeamento da fonte de evento do SQS para a função Lambda
-resource "aws_lambda_event_source_mapping" "sqs_event_source" {
-  event_source_arn = aws_sqs_queue.queue.arn
-  function_name    = aws_lambda_function.lambda_function.arn
-  batch_size       = 1
 }
