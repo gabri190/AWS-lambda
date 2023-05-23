@@ -430,7 +430,6 @@ Dito isso, o último comando será aplicado para destruir a infraestrutura.Nesse
 terraform destroy
 ~~~
 
-Após destruir a infraestruturua, você verá a saída a seguir:
+Após destruir a infraestrutura, você verá a saída a seguir:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/aa157664-58ad-48e0-9632-5b4245694afd)
-   
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b3b2c3e9-dbd6-4eda-8b14-5d6ec5857156)   
