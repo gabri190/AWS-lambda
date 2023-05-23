@@ -438,3 +438,8 @@ terraform destroy
 Após destruir a infraestrutura, você verá a saída a seguir:
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b3b2c3e9-dbd6-4eda-8b14-5d6ec5857156)   
+  
+<div> Observações Finais :
+    <li> Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!
+  
+</div>  
