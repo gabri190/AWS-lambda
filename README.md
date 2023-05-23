@@ -253,7 +253,7 @@ sqs_test.json
 
 <li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
-[image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
 
 Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
@@ -405,11 +405,16 @@ def lambda_handler(event, context):
 } 
 ~~~
   
-Você verá a seguinte saída:
+<li> Você verá a seguinte saída:
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a0a7d7c-6a9e-4f92-80ab-288bf20dc67e)
 
-
+<li> Pelo cloudwatch podemos ver nos streams de log (clique sempre no último de cima pra baixo) o item criado:
+  
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c888ead8-8075-4fcd-a44d-8e4ab48eda29)
+  
+  
+  
 ### Término e destruição da Infraestrutura
     
 Ao realizar todos os testes na AWS e conferir todos os recursos precisamos destruir a infraestutura e a seguir alguns motivos pelos quais precisamos realizar essa última ação:
