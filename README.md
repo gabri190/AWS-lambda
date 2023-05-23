@@ -149,17 +149,17 @@ terraform plan
 
 A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo planejada:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/5ac44d48-aad8-46a7-9da7-a2535155ed66)
-
- Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):.
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/bd4538ee-68ba-41b5-95dc-bdb378d04bb7)
+    
+Agora por fim podemos aplicar a infraestrutura e subi-lá na AWS por meio do comando apply, mostrado a seguir (pode demorar uns minutinhos):.
 ~~~
 terraform apply -auto-approve
 ~~~
 
 A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo aplicada:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/ce562ef1-b87f-4417-987b-00ad10d7b550)
-
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b847cc46-8e0d-44eb-be9d-4afc9799ab5d)
+    
 ### Teste Infraestrutura AWS
 
 #### Recursos Criados
@@ -253,7 +253,7 @@ sqs_test.json
 
 <li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
-[image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
 
 Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
@@ -405,11 +405,16 @@ def lambda_handler(event, context):
 } 
 ~~~
   
-Você verá a seguinte saída:
+<li> Você verá a seguinte saída:
  
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/2a0a7d7c-6a9e-4f92-80ab-288bf20dc67e)
 
-
+<li> Pelo cloudwatch podemos ver nos streams de log (clique sempre no último de cima pra baixo) o item criado:
+  
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c888ead8-8075-4fcd-a44d-8e4ab48eda29)
+  
+  
+  
 ### Término e destruição da Infraestrutura
     
 Ao realizar todos os testes na AWS e conferir todos os recursos precisamos destruir a infraestutura e a seguir alguns motivos pelos quais precisamos realizar essa última ação:
@@ -430,7 +435,6 @@ Dito isso, o último comando será aplicado para destruir a infraestrutura.Nesse
 terraform destroy
 ~~~
 
-Após destruir a infraestruturua, você verá a saída a seguir:
+Após destruir a infraestrutura, você verá a saída a seguir:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/aa157664-58ad-48e0-9632-5b4245694afd)
-   
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b3b2c3e9-dbd6-4eda-8b14-5d6ec5857156)   
