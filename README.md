@@ -158,8 +158,8 @@ terraform apply -auto-approve
 
 A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo aplicada:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/ce562ef1-b87f-4417-987b-00ad10d7b550)
-
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b847cc46-8e0d-44eb-be9d-4afc9799ab5d)
+    
 ### Teste Infraestrutura AWS
 
 #### Recursos Criados
