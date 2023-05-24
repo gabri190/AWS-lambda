@@ -1,16 +1,20 @@
 ## Projeto AWS Lambda 
   <li>Este projeto é um exemplo de um sistema de gerenciamento da função lambda que utiliza a AWS Lambda como serviço principal e SQS, Amazon Rds, DynamoDb e CloudWatch como serviços auxiliares.Assim, de forma prática pode-se fazer um sistema de gerenciamento de bancos de dados ou tabelas onde o SQS que é um sistema de filas(Queue) iria mandar uma mensagem em forma de json para cadastrar algum usuário para a função lambda por meio de um event source mapping e ,posteriormente, usa os dados dos eventos (cadastro do usuário) para atualizar tabelas do DynamoDB . Além disso, ele armazena uma cópia do evento em um banco de dados MySQL (Amazon Rds).
 
-### Topologia de Rede
+Topologia de Rede
+---------------
   
   ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/eabea0ed-d34b-4e46-b903-faa5bb933036)
-### Tecnologias
+
+Tecnologias
+---------------
   <div> 
     <a href="terraform logo" target="_blank"><img src="https://img.shields.io/badge/-TERRAFORM-blueviolet" target="_blank"></a>
     <a href="python log" target="_blank"><img src="https://img.shields.io/badge/-PYTHON-blue" target="_blank"></a>
   </div>
 
-### Serviços Utilizados
+Serviços Utilizados
+---------------
 A aplicação de exemplo usa os seguintes serviços da AWS:
 
 <li> SQS: O Amazon SQS envia mensagens(cadastro de usuários) para a função lambda que irá processá-las e envia-las para o banco de dados e a tabela do dynamoDB.
@@ -25,7 +29,8 @@ A aplicação de exemplo usa os seguintes serviços da AWS:
 
 <li> Amazon VPC: fornece uma rede local privada para comunicação entre a função lambda e o banco de dados que necessitam estar na mesma subnet.
 
-### Requisitos
+Requisitos
+---------------
  <li> <a href="https://aws.amazon.com/pt/">AWS account</a>
  <li> <a href="https://docs.aws.amazon.com/pt_br/IAM/latest/UserGuide/id_users_create.html">AWS IAM user (usuário criado)</a>
  <li> <a href="https://www.python.org/downloads/">Python</a>
@@ -33,9 +38,10 @@ A aplicação de exemplo usa os seguintes serviços da AWS:
  <li> <a href="https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/roles">Acesso a console da AWS</a>
  <li> Powershell
 
-### Primeiros Passos
+Primeiros Passos
+---------------
 
-#### Instalação Terraform
+### Instalação Terraform
 Para a intalação do terraform siga o tutorial abaixo:
   <li>  <a href="https://www.youtube.com/watch?v=bSrV1Dr8py8&t=223s">Instalando o Terraform no Windows, Linux e MacOS</a>
 
@@ -114,7 +120,8 @@ $env:AWS_SECRET_ACCESS_KEY="SUA_SECRET_ACCESS_KEY"
 $env:AWS_DEFAULT_REGION="REGIÃO_PREFERENCIAL"
 ~~~
 
-### Utilização terraform
+Utilização terraform
+---------------
 
 Agora já estamos prontos pra utlizar o projeto com as configurações do terraform e da AWS, ou seja, os principais comandos do terraform (vistos ao longo desse tutorial) para a criação da infraestrutura serão vistos na AWS. Por isso, como um fluxo de trabalho interessante é importante fazer o trabalho de forma local e ,posteriormente, conferir todas as atualizações no seu console da AWS.
 
@@ -160,9 +167,10 @@ A imagem a seguir mostrará a seguida adequada com a infraestrutura sendo aplica
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b847cc46-8e0d-44eb-be9d-4afc9799ab5d)
     
-### Teste Infraestrutura AWS
-
-#### Recursos Criados
+Teste Infraestrutura AWS
+---------------
+    
+### Recursos Criados
 Primeiramente, é necessário saber se os recursos de fato foram criados na AWS:
 
 <li> Acesse o console da AWS com o seu login e senha da AWS:
@@ -196,7 +204,7 @@ Ao chegar a página após procurar por "DyanamoDB" no campo de pesquisa na parte
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/3b82029d-2bab-4f3c-b8b5-b26f511db43a)
 
 
-#### Teste dos Recursos
+### Teste dos Recursos
 
 Agora podemos testar os recursos criados na AWS, como visto anteriormente:
 
@@ -252,22 +260,27 @@ sqs_test.json
   
 
 <li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
+<div align="center">
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/6f4f5c96-b5f8-4a19-8f09-956736ff408c)
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/8694085c-df38-4c91-ade2-884ffa260868)
+
+</div>
 
 Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/549d9236-4f4d-4ac7-976b-44998c587734)
   
-Clique no último log criado ( o primeiro de cima pra baixo):
+
+<li> Clique no último log criado (o primeiro de cima pra baixo):
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/0aa71985-92ce-4c66-a848-5b238d82e182)
 
-Após isso teremos a imagem :  
+
+<li> Após isso teremos a imagem :  
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/e576eec3-1d77-404b-a2a5-54a1ee3fdec4)
   
-Na imagem anterior percebemos entre todas as mensagens a criação de 2 items de maneira que um deles foi criado no JSON de evento simulado e outro por meio do envio da mensagem da SQS para a função lambda:
+<li> Na imagem anterior percebemos, entre todas as mensagens, a criação de 2 items de maneira que um deles foi criado no JSON de evento simulado e outro por meio do envio da mensagem da SQS para a função lambda:
 
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/a0e2976a-4611-46fd-89b1-bb838a313978)
   
@@ -412,11 +425,10 @@ def lambda_handler(event, context):
 <li> Pelo cloudwatch podemos ver nos streams de log (clique sempre no último de cima pra baixo) o item criado:
   
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/c888ead8-8075-4fcd-a44d-8e4ab48eda29)
-  
-  
-  
-### Término e destruição da Infraestrutura
-    
+
+Término e destruição da Infraestrutura
+---------------  
+
 Ao realizar todos os testes na AWS e conferir todos os recursos precisamos destruir a infraestutura e a seguir alguns motivos pelos quais precisamos realizar essa última ação:
     
 <div>
