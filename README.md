@@ -455,3 +455,19 @@ Após destruir a infraestrutura, você verá a saída a seguir:
     <li> Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!
   
 </div>  
+
+Conclusão
+---------------  
+Assim, finalizamos nosso projeto que tinha como intuito o cadastro de usuários em bancos de dados (amazon RDS) e tabelas (DynamoDb), no entanto, note que o ponto central desse projeto diz respeito a função lambda que faz toda a integração entre o sistema de filas (SQS) que realiza o envio da mensagem e os sistemas de armazenamento de dados (RDS e DynamoDB). Por isso, apesar de ser apenas um projeto menor, vê-se a importância da lambda function e de todas as integrações feitas para o sistema de armazenamento de valores (dados de usuários) que pode , por exemplo, servir de backend para um site ou outros usos a depender da iteração para a melhora do projeto. 
+
+Referências
+---------------
+  
+https://www.youtube.com/watch?v=3E1IcVIaI0A&t=756s
+
+https://www.youtube.com/watch?v=etru_8t7Dyk&t=2226s
+
+https://docs.aws.amazon.com/pt_br/lambda/latest/dg/services-rds-tutorial.html
+
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
