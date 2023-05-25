@@ -1,0 +1,61 @@
+
+site_name: 'AWS Lambda User Registration'
+
+theme:
+  features:
+    - instant
+    - navigation.expand
+    - tabs: true
+  name: 'material'
+  palette:
+      primary: 'white'
+      accent: 'pink'
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+# Copyright
+copyright: 'Copyright &copy; 2023 / Gabriel Araújo / gabrielaa3@al.insper.edu.br'
+
+# repo
+docs_dir: docs-src
+site_dir: docs
+
+nav:
+  - Home: index.md
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.attr_list
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+    - search
