@@ -120,9 +120,16 @@ $env:AWS_SECRET_ACCESS_KEY="SUA_SECRET_ACCESS_KEY"
 $env:AWS_DEFAULT_REGION="REGIÃO_PREFERENCIAL"
 ~~~
 
-Instalação dependências
+Utilização terraform
 ---------------
- 
+
+Agora já estamos prontos pra utlizar o projeto com as configurações do terraform e da AWS, ou seja, os principais comandos do terraform (vistos ao longo desse tutorial) para a criação da infraestrutura serão vistos na AWS. Por isso, como um fluxo de trabalho interessante é importante fazer o trabalho de forma local e ,posteriormente, conferir todas as atualizações no seu console da AWS.
+
+Para baixar esse projeto vá em algum diretório da sua máquina e digite :
+```
+git clone https://github.com/gabri190/AWS-lambda.git
+```
+
 Para aqueles que não possuem alguma depedência necessária para esse projeto, foi criado um arquivo requirements.txt e para rodar utilize o seguinte comando abaixo:
 
 ~~~
@@ -136,17 +143,7 @@ Como já instalei, a imagem a seguir mostrará as dependências já instaladas
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/3cb6db53-5319-415d-875a-6a75ff1fc2b6)
 
 </div>
-
-Utilização terraform
----------------
-
-Agora já estamos prontos pra utlizar o projeto com as configurações do terraform e da AWS, ou seja, os principais comandos do terraform (vistos ao longo desse tutorial) para a criação da infraestrutura serão vistos na AWS. Por isso, como um fluxo de trabalho interessante é importante fazer o trabalho de forma local e ,posteriormente, conferir todas as atualizações no seu console da AWS.
-
-Para baixar esse projeto vá em algum diretório da sua máquina e digite :
-```
-git clone https://github.com/gabri190/AWS-lambda.git
-```
-
+    
 Agora com o projeto já baixado, podemos começar a utilizar os principais comandos do terraform para subir nossa infraestrura.Dessa maneira, vá ao diretório onde seu projeto foi clonado anteriormente e digite o seguinte comando:
 ~~~
 terraform init
