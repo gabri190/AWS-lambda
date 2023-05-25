@@ -215,7 +215,7 @@ Agora podemos testar os recursos criados na AWS, como visto anteriormente:
 <li> Substitua o JSON do evento pelo código a seguir:
  
 test.json  
- ~~~
+ ```json
  {
     "Records": [
       {
@@ -236,7 +236,7 @@ test.json
       }
     ]
   } 
- ~~~
+ ```
  
 <li> Salve o evento e agora estaremos prontos pra testar!
   
@@ -251,12 +251,12 @@ test.json
 <li> A mensagem correspondente em um json:
 
 sqs_test.json
-~~~
+```json
 {
   "CustID": 1054,
   "Name": "Richard Roe"
 }
-~~~
+```
   
 
 <li> Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
@@ -286,7 +286,7 @@ Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
 <li> Agora modifique o código python na seção de códigos da função lambda para o último teste agora em relação ao DynamoDB!  
   
-~~~  
+``` python
 def lambda_handler(event, context):
     print('Incoming event: ', event)
     print('Incoming state: ', event['state'])
@@ -310,11 +310,11 @@ def lambda_handler(event, context):
 
     print('Returning state: ', state)
     return {'state': state}
- ~~~
+```
   
 <li> Modifique também o JSON de evento:
 
- ~~~
+ ```json
  {
   "Records": [
     {
@@ -416,7 +416,7 @@ def lambda_handler(event, context):
   "isFinalInvokeForWindow": false,
   "isWindowTerminatedEarly": false
 } 
-~~~
+```
   
 <li> Você verá a seguinte saída:
  
@@ -468,6 +468,8 @@ https://www.youtube.com/watch?v=3E1IcVIaI0A&t=756s
 https://www.youtube.com/watch?v=etru_8t7Dyk&t=2226s
 
 https://docs.aws.amazon.com/pt_br/lambda/latest/dg/services-rds-tutorial.html
+
+https://docs.aws.amazon.com/pt_br/lambda/latest/dg/with-ddb.html  
 
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 
