@@ -129,7 +129,7 @@ Para baixar esse projeto vá em algum diretório da sua máquina e digite :
 git clone https://github.com/gabri190/AWS-lambda.git
 ```
 
-Para aqueles que não possuem alguma depedência necessária para esse projeto, foi criado um arquivo requirements.txt e para rodar utilize o seguinte comando abaixo:
+Para aqueles que não possuem alguma dependência necessária para esse projeto, foi criado um arquivo requirements.txt e para rodar utilize o seguinte comando abaixo:
 
 ~~~
 pip install -r requirements.txt
@@ -245,11 +245,11 @@ test.json
         "messageAttributes": {},
         "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
         "eventSource": "aws:sqs",
-        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-s3-event-notification-queue",
+        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-event-notification-queue",
         "awsRegion": "us-east-1"
       }
     ]
-  } 
+  }
  ```
  
 -  Salve o evento e agora estaremos prontos pra testar!
@@ -275,12 +275,16 @@ sqs_test.json
 
 -  Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:
 
-![image](https://github.com/gabri190/AWS-lambda/assets/72319195/8694085c-df38-4c91-ade2-884ffa260868)
+<div align="center">
+
+<img src="https://github.com/gabri190/AWS-lambda/assets/72319195/8694085c-df38-4c91-ade2-884ffa260868">
+
+</div>
 
 
-
-Clique em   **/aws/lambda/project-terraform-lambda-function** :
+- Clique em   **/aws/lambda/project-terraform-lambda-function** :
   
+
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/549d9236-4f4d-4ac7-976b-44998c587734)
   
 
@@ -465,7 +469,8 @@ Após destruir a infraestrutura, você verá a saída a seguir:
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/b3b2c3e9-dbd6-4eda-8b14-5d6ec5857156)   
   
  Observações Finais :
-    -  Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!
+
+-  Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!
   
   
 
