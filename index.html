@@ -739,7 +739,7 @@ $env:AWS_DEFAULT_REGION=&quot;REGIÃO_PREFERENCIAL&quot;
 <p>Para baixar esse projeto vá em algum diretório da sua máquina e digite :
 <div class="highlight"><pre><span></span><code>git clone https://github.com/gabri190/AWS-lambda.git
 </code></pre></div></p>
-<p>Para aqueles que não possuem alguma depedência necessária para esse projeto, foi criado um arquivo requirements.txt e para rodar utilize o seguinte comando abaixo:</p>
+<p>Para aqueles que não possuem alguma dependência necessária para esse projeto, foi criado um arquivo requirements.txt e para rodar utilize o seguinte comando abaixo:</p>
 <div class="highlight"><pre><span></span><code>pip install -r requirements.txt
 </code></pre></div>
 <p>Como já instalei, a imagem a seguir mostrará as dependências já instaladas</p>
@@ -813,11 +813,11 @@ $env:AWS_DEFAULT_REGION=&quot;REGIÃO_PREFERENCIAL&quot;
 <span class="w">       </span><span class="nt">&quot;messageAttributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
 <span class="w">       </span><span class="nt">&quot;md5OfBody&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e4e68fb7bd0e697a0ae8f1bb342846b3&quot;</span><span class="p">,</span>
 <span class="w">       </span><span class="nt">&quot;eventSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aws:sqs&quot;</span><span class="p">,</span>
-<span class="w">       </span><span class="nt">&quot;eventSourceARN&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:sqs:us-east-1:108791993403:project-terraform-s3-event-notification-queue&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;eventSourceARN&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:sqs:us-east-1:108791993403:project-terraform-event-notification-queue&quot;</span><span class="p">,</span>
 <span class="w">       </span><span class="nt">&quot;awsRegion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;us-east-1&quot;</span>
 <span class="w">     </span><span class="p">}</span>
 <span class="w">   </span><span class="p">]</span>
-<span class="w"> </span><span class="p">}</span><span class="w"> </span>
+<span class="w"> </span><span class="p">}</span>
 </code></pre></div></p>
 <ul>
 <li>
@@ -844,8 +844,15 @@ $env:AWS_DEFAULT_REGION=&quot;REGIÃO_PREFERENCIAL&quot;
 <ul>
 <li>Podemos ver essas criações por meio do cloudwatch, pesquise por cloudwatch e ao chegar à página clique em Grupos de Logs na parte de Logs:</li>
 </ul>
-<p><img alt="image" src="https://github.com/gabri190/AWS-lambda/assets/72319195/8694085c-df38-4c91-ade2-884ffa260868" /></p>
-<p>Clique em   <strong>/aws/lambda/project-terraform-lambda-function</strong> :</p>
+<div align="center">
+
+<img src="https://github.com/gabri190/AWS-lambda/assets/72319195/8694085c-df38-4c91-ade2-884ffa260868">
+
+</div>
+
+<ul>
+<li>Clique em   <strong>/aws/lambda/project-terraform-lambda-function</strong> :</li>
+</ul>
 <p><img alt="image" src="https://github.com/gabri190/AWS-lambda/assets/72319195/549d9236-4f4d-4ac7-976b-44998c587734" /></p>
 <ul>
 <li>Clique no último log criado (o primeiro de cima pra baixo):</li>
@@ -1020,8 +1027,10 @@ $env:AWS_DEFAULT_REGION=&quot;REGIÃO_PREFERENCIAL&quot;
 </code></pre></div>
 <p>Após destruir a infraestrutura, você verá a saída a seguir:</p>
 <p><img alt="image" src="https://github.com/gabri190/AWS-lambda/assets/72319195/b3b2c3e9-dbd6-4eda-8b14-5d6ec5857156" />   </p>
-<p>Observações Finais :
-    -  Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!</p>
+<p>Observações Finais :</p>
+<ul>
+<li>Os comandos terraform apply e terraform destroy podem demorar mais do que o normal pelos serviços que estão subindo na AWS, por isso, principalmente, no destroy pode ser necessário rodar o comando mais de uma vez!</li>
+</ul>
 <h2 id="conclusao">Conclusão<a class="headerlink" href="#conclusao" title="Permanent link">&para;</a></h2>
 <p>Assim, finalizamos nosso projeto que tinha como intuito o cadastro de usuários em bancos de dados (amazon RDS) e tabelas (DynamoDb), no entanto, note que o ponto central desse projeto diz respeito a função lambda que faz toda a integração entre o sistema de filas (SQS) que realiza o envio da mensagem e os sistemas de armazenamento de dados (RDS e DynamoDB). Por isso, apesar de ser apenas um projeto menor, vê-se a importância da lambda function e de todas as integrações feitas para o sistema de armazenamento de valores (dados de usuários) que pode , por exemplo, servir de backend para um site ou outros usos a depender da iteração para a melhora do projeto. </p>
 <h2 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h2>
