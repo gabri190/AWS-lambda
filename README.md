@@ -1,4 +1,8 @@
 ### Projeto AWS Lambda User Registration
 
 Consulte a documentação:
-  <li> https://gabri190.github.io/AWS-lambda
+  - https://gabri190.github.io/AWS-lambda
+
+Link Para Vídeo de Funcionamento:
+
+  - https://www.youtube.com/watch?v=V3j-5EOx8cA 
