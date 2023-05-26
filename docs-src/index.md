@@ -245,17 +245,90 @@ test.json
         "messageAttributes": {},
         "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
         "eventSource": "aws:sqs",
-        "eventSourceARN": "arn:aws:sqs:us-east-1:108791993403:project-terraform-event-notification-queue",
+        "eventSourceARN": "*",
         "awsRegion": "us-east-1"
       }
     ]
   }
  ```
  
--  Salve o evento e agora estaremos prontos pra testar!
-  
--  Volte para a parte de código e após clicar em teste, a imagem a seguir deverá aparecer avisando que 1 item foi adicionado ao RDS:
- 
+-  Salve o evento e volte para o Banco de dados RDS que foi criado!
+
+- Observe a imagem a seguir:
+
+![image](https://github.com/gabri190/AWS-lambda/assets/72319195/53f4f91f-0503-414c-b028-7433b07039e6)
+
+- Na imagem anterior você viu a instância de banco de dados que foi criada, com isso, guarde o valor da Endpoint (está em segurança e conexão em Endpoint e Porta) , pois iremos utilizá-la para acessar o banco de dados, lembrando que cada usuário possuirá uma endpoint diferente.
+
+- Agora volte a função lambda e na parte de código,você verá o código a seguir:
+
+
+```python
+
+import sys
+import logging
+import pymysql
+import json
+
+# rds settings
+rds_host  = "My_RDS_Endpoint"
+user_name = "admin"
+password = "admin-gabriel"
+db_name = "database_lambda"
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# create the database connection outside of the handler to allow connections to be
+# re-used by subsequent function invocations.
+try:
+    conn = pymysql.connect(host=rds_host, user=user_name, passwd=password, db=db_name, connect_timeout=5)
+except pymysql.MySQLError as e:
+    logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
+    logger.error(e)
+    sys.exit()
+
+logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
+
+def lambda_handler(event, context):
+    """
+    This function creates a new RDS database table and writes records to it
+    """
+    message = event['Records'][0]['body']
+    data = json.loads(message)
+    CustID = data['CustID']
+    Name = data['Name']
+
+    item_count = 0
+    sql_string = f"insert into Customer (CustID, Name) values({CustID}, '{Name}')"
+
+    with conn.cursor() as cur:
+        cur.execute("create table if not exists Customer ( CustID  int NOT NULL, Name varchar(255) NOT NULL, PRIMARY KEY (CustID))")
+        cur.execute(sql_string)
+        conn.commit()
+        cur.execute("select * from Customer")
+        logger.info("The following items have been added to the database:")
+        for row in cur:
+            item_count += 1
+            logger.info(row)
+    conn.commit()
+
+    return "Added %d items to RDS MySQL table" %(item_count)
+```
+
+
+- Nessa parte do código: 
+
+```python
+
+rds_host  = "My_RDS_Endpoint"
+
+``` 
+
+Substitua o valor de My_RDS_Endpoint pelo valor da endpoint que você guardou anteriormente.
+
+- Agora sim com JSON de evento salvo e o código substituído, clique em testar e a imagem a seguir deverá aparecer avisando que 1 item foi adicionado ao RDS:
+
 ![image](https://github.com/gabri190/AWS-lambda/assets/72319195/17ef8b8f-bee4-4e5e-b7d1-732d54e3cc04)
   
 -  Agora volte ao recurso criado do SQS (queue) ,clique na queue criada e posteriormente, clique em enviar e receber mensagens e já nessa página envie a mensagem a seguir:
