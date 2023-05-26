@@ -5,7 +5,7 @@ import pymysql
 import json
 
 # rds settings
-rds_host  = "mysql-db-lambda.cyubtgvol5vl.us-east-1.rds.amazonaws.com"
+rds_host  = "My_RDS_Endpoint"
 user_name = "admin"
 password = "admin-gabriel"
 db_name = "database_lambda"
