@@ -4,8 +4,13 @@ import logging
 import pymysql
 import json
 
+<<<<<<< HEAD
 # rds settings
 rds_host  = "My_RDS_Endpoint"
+=======
+# rds settings (se vc tiver algum database pode colocar sua senha e user_name próprio)
+rds_host  = "mysql-db-lambda.cyubtgvol5vl.us-east-1.rds.amazonaws.com"
+>>>>>>> e5ec1ba8f5fefbf4ffae69a8a26572f8c554bf89
 user_name = "admin"
 password = "admin-gabriel"
 db_name = "database_lambda"
